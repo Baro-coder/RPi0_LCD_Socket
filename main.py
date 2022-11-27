@@ -60,7 +60,7 @@ def main():
     
     # -- TCP Server
     print('Setting up the server... ', end='')
-    server = TCP_Server((HOST, PORT), BUFFER_SIZE, lcd)
+    server = TCP_Server((HOST, PORT), BUFFER_SIZE, lcd, FORMAT)
     print('Done.\n')
     
     try:

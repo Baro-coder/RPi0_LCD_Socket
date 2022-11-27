@@ -45,7 +45,7 @@ class LCD_Display:
         
         text = '-- LCD READY --'.center(self.size['cols'])
         
-        self.write(row=1, text=text)
+        self.write(row=0, text=text)
         
         sleep(3)
         
@@ -53,5 +53,5 @@ class LCD_Display:
     def write(self, row : int, text : str):
         self.display.clear()
         
-        self.display.cursor_pos(row, 0)
+        self.display.cursor_pos = (row, 0)
         self.display.write_string(text)
