@@ -26,7 +26,7 @@ def config_init():
         
         cols = int(config['RPi LCD']['columns'])
         rows = int(config['RPi LCD']['rows'])
-        LCD_SIZE = {cols, rows}
+        LCD_SIZE = {'cols' : cols, 'rows' : rows}
         
         LCD_PIN_E = int(config['RPi LCD']['pin_e'])
         LCD_PIN_RS = int(config['RPi LCD']['pin_rs'])
