@@ -11,6 +11,10 @@ class LCD_Display:
         self.pin_rs = pin_rs
         self.pins_data = pins_data
         
+        self.rows_text = []
+        for i in range(self.size['rows']):
+            self.rows_text.append('')
+        
         self.__gpio_init()
         
         self.__display_init_show()
@@ -51,7 +55,10 @@ class LCD_Display:
         
         
     def write(self, row : int, text : str):
+        self.rows_text[row] = text
+        
         self.display.clear()
         
-        self.display.cursor_pos = (row, 0)
-        self.display.write_string(text)
+        for i, row_text in enumerate(self.rows_text):
+            self.display.cursor_pos = (i, 0)
+            self.display.write_string(row_text)
