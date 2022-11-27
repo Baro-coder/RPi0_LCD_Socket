@@ -21,7 +21,7 @@ class TCP_Server:
         self.format = format
         
         self.lcd = LCD_Display
-        self.row_range = list(range(1, self.lcd.size[1] + 1))
+        self.row_range = list(range(1, self.lcd.size['rows'] + 1))
     
     
     @staticmethod

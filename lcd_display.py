@@ -5,7 +5,7 @@ from time import sleep
 
 
 class LCD_Display:
-    def __init__(self, size : tuple, pin_e : int, pin_rs : int, pins_data : list) -> None:
+    def __init__(self, size : dict, pin_e : int, pin_rs : int, pins_data : list) -> None:
         self.size = size
         self.pin_e = pin_e
         self.pin_rs = pin_rs
@@ -29,8 +29,8 @@ class LCD_Display:
         for pin in self.pins_data:
             GPIO.setup(pin, GPIO.OUT)
 
-        self.display = CharLCD(cols=self.size[0],
-                      rows=self.size[1],
+        self.display = CharLCD(cols=self.size['cols'],
+                      rows=self.size['rows'],
                       pin_rs=self.pin_rs,
                       pin_e=self.pin_e,
                       pins_data=self.pins_data,
@@ -43,7 +43,7 @@ class LCD_Display:
     def __display_init_show(self):
         self.display.clear()
         
-        text = '-- LCD READY --'.center(self.size[0])
+        text = '-- LCD READY --'.center(self.size['cols'])
         
         self.display.write(row=1, text=text)
         
