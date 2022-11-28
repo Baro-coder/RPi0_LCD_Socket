@@ -60,7 +60,7 @@ def main():
     # -- PID
     print('Storing the PID... ', end='')
     store_pid()
-    print('Done.\n')
+    print('Done.')
     
     # -- Config
     print('Reading config... ', end='')
@@ -75,7 +75,7 @@ def main():
     # -- TCP Server
     print('Setting up the server... ', end='')
     server = TCP_Server((HOST, PORT), BUFFER_SIZE, lcd, FORMAT)
-    print('Done.')
+    print('Done.\n')
     
     try:
         server.run()
