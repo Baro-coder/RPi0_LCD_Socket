@@ -1,0 +1,16 @@
+[Unit]
+Description=Raspberry Pi LCD Display TCP Socket Server
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+ExecStart=/bin/bash /home/pi/.Private/lcd_socket.sh
+WorkingDirectory=/home/pi/.Private
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+RestartSec=1
+User=pi
+
+[Install]
+WantedBy=multi-user.target
