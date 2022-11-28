@@ -1,5 +1,7 @@
+#!/usr/bin/python
+# -- LCD_Socket: main.py --
+
 import sys
-import os
 import configparser as cfgp
 
 from tcp_server import TCP_Server
@@ -7,7 +9,6 @@ from lcd_display import LCD_Display
 
 APP_DIR = '/home/pi/.Private/RPi0_LCD_Socket'
 CONFIG_FILE = f'{APP_DIR}/config.ini'
-PID_FILE = '/var/lcd_socket.pid'
 
 
 def config_init():
@@ -50,18 +51,7 @@ def config_init():
         sys.exit(1)
 
 
-def store_pid():
-    pid = os.getpid()
-    with open(PID_FILE, 'w') as f:
-        f.write(str(pid))
-
-
 def main():
-    # -- PID
-    print('Storing the PID... ', end='')
-    store_pid()
-    print('Done.')
-    
     # -- Config
     print('Reading config... ', end='')
     config_init()

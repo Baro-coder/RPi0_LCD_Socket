@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -- LCD_Socket: tcp_server.py --
+
 import socket
 import threading as thr
 

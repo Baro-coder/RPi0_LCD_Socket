@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -- LCD_Socket: lcd_display.py --
+
 import RPi.GPIO as GPIO
 from RPLCD import CharLCD
 
