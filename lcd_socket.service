@@ -6,8 +6,8 @@ StartLimitIntervalSec=0
 [Service]
 ExecStart=/bin/bash /home/pi/.Private/lcd_socket.sh
 WorkingDirectory=/home/pi/.Private
-StandardOutput=inherit
-StandardError=inherit
+StandardOutput=/var/log/lcd_socket.log
+StandardError=/var/log/lcd_socket.err
 Restart=always
 RestartSec=1
 User=pi

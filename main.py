@@ -41,13 +41,14 @@ def config_init():
     
     
     except KeyError as e:
-        print('-- Config Error --')
-        print(e)
+        sys.stderr.write('-- Config Key Error --')
+        sys.stderr.write(str(e))
+        sys.exit(1)
     
     except Exception as e:
-        print('-- Unexpected Error Config --')
-        print(type(e))
-        print(e)
+        sys.stderr.write('-- Unexpected Error Config --')
+        sys.stderr.write(str(type(e)))
+        sys.stderr.write(str(e))
         sys.exit(1)
 
 
@@ -71,12 +72,17 @@ def main():
         server.run()
         
     except KeyboardInterrupt:
+        lcd.write(0, '-- Manually Interrupt --'.center(24))
+        lcd.write(1, '')
         print('-- Manually Interrupt --')
     
     except Exception as e:
-        print('-- Unexpected Error Server --')
-        print(type(e))
-        print(e)
+        lcd.write(0, '-- Error Server --')
+        lcd.write(1, '')
+        
+        sys.stderr.write('-- Unexpected Error Server --')
+        sys.stderr.write(str(type(e)))
+        sys.stderr.write(str(e))
         sys.exit(1)
         
 

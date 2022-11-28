@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -- LCD_Socket: tcp_server.py --
 
+import sys
 import socket
 import threading as thr
 
@@ -28,9 +29,12 @@ class TCP_Server:
     
     
     @staticmethod
-    def _thread_print(text : str):
+    def _thread_print(text : str, err=False):
         with TCP_Server.lock_console:
-            print(text)
+            if err:
+                sys.stderr.write(text)
+            else:
+                print(text)
     
     def _handle_request(self, request : str, addr : list):
         try:
@@ -40,18 +44,21 @@ class TCP_Server:
             if seq1[0] == 'ROW':
                 row = int(seq1[1])
             else:
+                TCP_Server._thread_print(f'{addr[0]}:{addr[1]}: Invalid input: {request}', err=True)
                 return False
             
             seq2 = seqs[1].split('=', 1)
             if seq2[0] == 'TEXT':
                 text = seq2[1]
             else:
+                TCP_Server._thread_print(f'{addr[0]}:{addr[1]}: Invalid input: {request}', err=True)
                 return False
             
             if not row in self.row_range:
+                TCP_Server._thread_print(f'{addr[0]}:{addr[1]}: Invalid input: {request}', err=True)
                 return False
             
-            TCP_Server._thread_print(f'\tRequest from: {addr[0]}:{addr[1]}:\n\t\t{row = }\n\t\t{text = }')
+            TCP_Server._thread_print(f'\tRequest: {addr[0]}:{addr[1]}:\n\t\t{row = }\n\t\t{text = }')
             
             with TCP_Server.lock_display:
                 self.lcd.write(row=row, text=text)
@@ -59,18 +66,20 @@ class TCP_Server:
             return True
             
         except IndexError or ValueError:
+            TCP_Server._thread_print('-- Server Thread Error --', err=True)
+            TCP_Server._thread_print(f'{type(e)} : {e}', err=True)
             return False
         
         except Exception as e:
-            TCP_Server._thread_print(f'{type(e)} : {e}')
+            TCP_Server._thread_print('-- Unexpected Server Thread Error --', err=True)
+            TCP_Server._thread_print(f'{type(e)} : {e}', err=True)
+            return False
 
     def _handle_connection(self, conn, addr):
         with conn:
             
             with TCP_Server.lock_counter:
                 self.connections += 1
-            
-            TCP_Server._thread_print(f'Connection from: {addr[0]}:{addr[1]} : ESTABLISHED | Connections: {self.connections}')
             
             request = ""
             while True:
@@ -93,8 +102,6 @@ class TCP_Server:
             
             with TCP_Server.lock_counter:
                 self.connections -= 1
-            
-            TCP_Server._thread_print(f'Connection from: {addr[0]}:{addr[1]} : CLOSED | Connections: {self.connections}')
     
         
     def run(self):
@@ -110,4 +117,3 @@ class TCP_Server:
                 connection = thr.Thread(target=self._handle_connection, args=(conn, addr, ), daemon=True)
                 connection.name = f'<Thread>Connection[{addr}[1]:{addr[1]}]'
                 connection.start()
-

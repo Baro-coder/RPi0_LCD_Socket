@@ -54,7 +54,7 @@ class LCD_Display:
         
         self.write(row=0, text=text)
         
-        sleep(3)
+        sleep(2)
         
         
     def write(self, row : int, text : str):
