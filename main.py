@@ -5,7 +5,8 @@ import configparser as cfgp
 from tcp_server import TCP_Server
 from lcd_display import LCD_Display
 
-CONFIG_FILE = './config.ini'
+APP_DIR = '/home/pi/.Private/RPi0_LCD_Socket'
+CONFIG_FILE = f'{APP_DIR}/config.ini'
 PID_FILE = '/var/lcd_socket.pid'
 
 
